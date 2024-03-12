@@ -1,0 +1,52 @@
+---
+import { Image } from "astro:assets";
+import { type CollectionEntry } from "astro:content";
+import MainLayout from "@/layouts/MainLayout.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
+type Props = CollectionEntry<"blog">["data"];
+
+const { title, heroImage, pubDate, tags } = Astro.props;
+---
+
+<MainLayout title={title}>
+  <div class="max-w-article-size mx-auto w-full space-y-4 py-6">
+    <a
+      class="text-soft-white border-extra-soft-white inline-flex cursor-pointer items-center gap-2 self-start rounded-full border px-6 py-2 transition-colors duration-200 hover:border-purple-500"
+      href="/blog"
+    >
+      <svg
+        viewBox="0 -960 960 960"
+        xmlns="http://www.w3.org/2000/svg"
+        height="20"
+        width="20"
+        ><path
+          d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"
+          fill="#BFC7D2"></path></svg
+      >
+
+      Back to blog
+    </a>
+    <div
+      class="border-extra-soft-white w-full max-w-[none] rounded-xl border"
+      transition:name={title}
+    >
+      <article>
+        <Image
+          class="rounded-t-xl object-cover w-[1020px] h-[520px]"
+          width={1020}
+          height={520}
+          src={heroImage}
+          alt=""
+        />
+
+        <div class="text-white px-12 py-12 prose prose-invert">
+          <FormattedDate date={pubDate} />
+
+          <h1>{title}</h1>
+
+          <slot />
+        </div>
+      </article>
+    </div>
+  </div>
+</MainLayout>

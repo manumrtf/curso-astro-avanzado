@@ -1,0 +1,40 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+type Props = CollectionEntry<"blog">["data"] & { slug: string };
+const { heroImage, title, tags, pubDate, slug } = Astro.props;
+import FormattedDate from "@/components/FormattedDate.astro";
+---
+
+<li
+  class="border-extra-soft-white text-soft-white hover:bg-soft-light rounded-xl border transition-colors duration-200"
+>
+  <div transition:name={title}>
+    <article>
+      <a href={`/blog/${slug}`}>
+        <Image
+          src={heroImage}
+          alt=""
+          width={1020}
+          height={520}
+          class="aspect-[16/5] rounded-t-xl object-cover"
+        />
+        <div class="w-full">
+          <div class="flex flex-col px-12 py-4">
+            <h4 class="text-3xl font-bold">{title}</h4>
+            <div class="flex gap-2">
+              {
+                tags.map((tag) => (
+                  <span class="border-extra-soft-white mt-4 self-start rounded border px-2 py-1 text-zinc-400">
+                    {tag}
+                  </span>
+                ))
+              }
+            </div>
+            <FormattedDate date={pubDate} />
+          </div>
+        </div>
+      </a>
+    </article>
+  </div>
+</li>
